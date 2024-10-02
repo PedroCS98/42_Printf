@@ -1,6 +1,18 @@
-#include	"ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: psimoes <psimoes@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/02 20:39:12 by psimoes           #+#    #+#             */
+/*   Updated: 2024/10/02 20:43:08 by psimoes          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int ft_putchar(char x)
+#include "ft_printf.h"
+
+int	ft_putchar(char x)
 {
 	return (write(1, &x, 1));
 }
@@ -17,7 +29,7 @@ int	ft_putstr(const char *s)
 	return (i);
 }
 
-int ft_putnbr(int n)
+int	ft_putnbr(int n)
 {
 	char	str[12];
 	int		index;
@@ -28,7 +40,7 @@ int ft_putnbr(int n)
 	index = 10;
 	if (n < 0)
 		nbr = -nbr;
-  if (n == 0)
+	if (n == 0)
 		return (ft_putstr("0"));
 	while (nbr > 0)
 	{
@@ -41,7 +53,7 @@ int ft_putnbr(int n)
 	return (10 - index);
 }
 
-int ft_putunbr(unsigned int u)
+int	ft_putunbr(unsigned int u)
 {
 	char	str[12];
 	int		index;

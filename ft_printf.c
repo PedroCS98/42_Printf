@@ -1,8 +1,20 @@
-#include	"ft_printf.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: psimoes <psimoes@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/02 20:39:02 by psimoes           #+#    #+#             */
+/*   Updated: 2024/10/02 20:42:13 by psimoes          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int ft_puthex(unsigned long n, const char *format)
+#include "ft_printf.h"
+
+int	ft_puthex(unsigned long n, const char *format)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (n >= 16)
@@ -11,9 +23,9 @@ int ft_puthex(unsigned long n, const char *format)
 	return (i + 1);
 }
 
-int ft_putptr(unsigned long ptr, const char *format)
+int	ft_putptr(unsigned long ptr, const char *format)
 {
-	int i;
+	int	i;
 
 	i = write(1, "0x", 2);
 	if (ptr == 0)
@@ -25,9 +37,9 @@ int ft_putptr(unsigned long ptr, const char *format)
 	return (i);
 }
 
-int ft_print_format_specifier(va_list ap, const char *s, int i)
+int	ft_print_format_specifier(va_list ap, const char *s, int i)
 {
-	int size;
+	int	size;
 
 	size = 0;
 	if (s[i] == 'c')
@@ -44,11 +56,9 @@ int ft_print_format_specifier(va_list ap, const char *s, int i)
 		size += ft_puthex(va_arg(ap, unsigned int), "0123456789abcdef");
 	else if (s[i] == 'X')
 		size += ft_puthex(va_arg(ap, unsigned int), "0123456789ABCDEF");
-	else if (s[i] == '%')
-		size += ft_putchar('%');
 	else
-		return (-1); //ver se preciso de verificar se a letra do format specifier é correta
-	return size;
+		size += ft_putchar('%');
+	return (size);
 }
 
 int	ft_printf(const char *s, ...)
@@ -60,27 +70,27 @@ int	ft_printf(const char *s, ...)
 	i = 0;
 	buffer_size = 0;
 	va_start(ap, s);
-	if(!s)
+	if (!s)
 		return (-1);
-	while(s[i] != 0)
+	while (s[i] != 0)
 	{
-		if(s[i] == '%' && ++i)
+		if (s[i] == '%' && ++i)
 		{
 			if (!s[i])
-				return (-1);
-			buffer_size += ft_print_format_specifier(ap, s, i++); //ver se preciso de verificar se a letra do format specifier é correta
+				break ;
+			buffer_size += ft_print_format_specifier(ap, s, i++);
 		}
 		else
 			buffer_size += ft_putchar(s[i++]);
-		
 	}
 	va_end(ap);
 	return (buffer_size);
 }
+
 /*
 int main()
 {
-	int x = ft_printf("This is a test! = %% is correct");
+	int x = ft_printf("This is a test! = %h is correct");
 	write(1, "\n", 1);
 	ft_putnbr(x);
 }
