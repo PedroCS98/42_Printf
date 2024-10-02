@@ -50,8 +50,6 @@ int ft_putunbr(unsigned int u)
 	str[11] = 0;
 	nbr = u;
 	index = 10;
-	if (u < 0)
-		nbr = -nbr;
 	if (u == 0)
 		return (ft_putstr("0"));
 	while (nbr > 0)
@@ -59,8 +57,6 @@ int ft_putunbr(unsigned int u)
 		str[index--] = (nbr % 10) + '0';
 		nbr /= 10;
 	}
-	if (u < 0)
-		str[index--] = '-';
 	ft_putstr(&str[index + 1]);
 	return (10 - index);
 }
@@ -133,7 +129,7 @@ int	ft_printf(const char *s, ...)
 		{
 			if (!s[i])
 				return (-1);
-			buffer_size += print_format_specifier(ap, s, i); //ver se preciso de verificar se a letra do format specifier é correta
+			buffer_size += ft_print_format_specifier(ap, s, i++); //ver se preciso de verificar se a letra do format specifier é correta
 		}
 		else
 			buffer_size += ft_putchar(s[i++]);
@@ -142,9 +138,15 @@ int	ft_printf(const char *s, ...)
 	va_end(ap);
 	return (buffer_size);
 }
-
+/*
+int main()
+{
+	int x = ft_printf("This is a test! = %% is correct");
+	write(1, "\n", 1);
+	ft_putnbr(x);
+}
+*/
 // c s p d i u x X %
-
 /*
 %c - Character
 %s - String
